@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>MineConflux · MC 汇流</title>
+  <style>
+    :root{color-scheme:dark;--bg:#09111d;--card:#111d2c;--line:#29405b;--accent:#58d68d;--warn:#ffcc66;--muted:#9eb0c3;--slot:40px}*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at top,#17304a,var(--bg) 55%);font:16px system-ui,"Microsoft YaHei",sans-serif;color:#edf5ff}.wrap{max-width:1180px;margin:auto;padding:34px 18px}h1{margin:0 0 8px;font-size:clamp(28px,5vw,46px)}.lead{color:var(--muted);margin:0 0 26px}.panel,.profile{background:rgba(17,29,44,.94);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:0 14px 45px #0006}.row{display:grid;grid-template-columns:1fr 1fr auto;gap:12px}.code-field{display:grid;gap:6px}.code-field label{font-size:13px;color:#b9c9d9}.profiles{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;align-items:stretch}.profile{display:flex;flex-direction:column;min-width:0}.profile h2{margin:0 0 16px}.badge{font-size:12px;color:#102018;background:#72d49b;padding:3px 7px;border-radius:999px;vertical-align:middle}.profile-stats{min-height:260px}.kv{display:grid;grid-template-columns:100px minmax(0,1fr);gap:7px 12px}.kv span:nth-child(odd){color:var(--muted)}.uuid{font-size:13px;overflow-wrap:anywhere}input,button{border-radius:10px;border:1px solid var(--line);padding:13px;background:#0a1420;color:#fff;font:inherit}button{cursor:pointer;background:#1c6d49;border-color:#3da875;font-weight:700}button.secondary{background:#26364a}button.danger{background:#713b31;border-color:#b86555}button:disabled{opacity:.45;cursor:not-allowed}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}.notice{white-space:pre-wrap;margin-top:14px;padding:12px;border-radius:10px;background:#0a1420;color:var(--warn)}.hidden{display:none}.mc-section{margin-top:16px}.mc-title{display:flex;align-items:center;justify-content:space-between;margin:0 0 7px;font-size:14px;color:#d6e1ec}.mc-shell{width:fit-content;max-width:100%;padding:10px;background:#c6c6c6;border:3px solid;border-color:#fff #555 #555 #fff;box-shadow:0 2px 0 #000}.slot-grid{display:grid;grid-template-columns:repeat(9,var(--slot));gap:2px}.equipment{display:flex;gap:2px;margin-bottom:8px}.hotbar{margin-top:8px}.slot{position:relative;width:var(--slot);height:var(--slot);background:#8b8b8b;border:2px solid;border-color:#373737 #fff #fff #373737;image-rendering:pixelated}.slot img{position:absolute;inset:3px;width:calc(100% - 6px);height:calc(100% - 6px);object-fit:contain;image-rendering:pixelated}.slot .count{position:absolute;right:2px;bottom:-1px;color:#fff;font:bold 15px monospace;text-shadow:2px 2px #333;z-index:2}.slot.enchanted:after{content:"";position:absolute;inset:2px;background:linear-gradient(120deg,transparent 20%,#b968ff66 45%,transparent 70%);mix-blend-mode:screen;pointer-events:none}.slot-label{position:absolute;inset:auto 2px 1px auto;color:#ddd;font-size:9px}.tooltip{position:fixed;display:none;z-index:20;max-width:380px;padding:9px 11px;background:#100010f2;border:2px solid #2b0d46;box-shadow:inset 0 0 0 1px #5c2b83;color:#fff;font:14px monospace;white-space:pre-wrap;pointer-events:none}.tooltip .nbt{color:#aaa;font-size:11px;word-break:break-all}.empty-note{color:#333;font-size:12px;margin:6px 0 0}.mc-credit{font-size:10px;color:#7d8fa1;margin-top:5px}.profile-choice{display:flex;align-items:center;gap:8px}.choice-java{border-color:#46b779}.choice-bedrock{border-color:#6ba6d9}@media(max-width:980px){.profiles{grid-template-columns:1fr}.profile-stats{min-height:0}}@media(max-width:520px){:root{--slot:calc((100vw - 82px)/9)}.row{grid-template-columns:1fr}.row button{width:100%}.panel,.profile{padding:14px}.mc-shell{padding:7px}.kv{grid-template-columns:88px 1fr}}
+  </style>
+  <style>
+    @media(max-width:520px){
+      .mc-shell{width:100%}
+      .slot-grid{grid-template-columns:repeat(9,minmax(0,1fr))}
+      .slot-grid .slot{width:100%;height:auto;aspect-ratio:1}
+      .equipment .slot{width:calc((100% - 16px)/9);height:auto;aspect-ratio:1;flex:0 0 calc((100% - 16px)/9)}
+    }
+  </style>
+</head>
+<body><main class="wrap">
+  <h1>MineConflux · MC 汇流</h1>
+  <p class="lead">默认 Java 与基岩存档独立。只有完成双端验证后，才可以查看、迁移并绑定。</p>
+  <section class="panel" id="verify">
+    <h2>第一步：验证两个账号</h2>
+    <p>分别使用 Java 与基岩进入服务器并输入 <b>/linkcode</b>，记下两个验证码，然后让两个角色退出服务器。</p>
+    <div class="row"><div class="code-field"><label for="code1">Java 版验证码</label><input id="code1" inputmode="numeric" maxlength="8" placeholder="Java 客户端 /linkcode"></div><div class="code-field"><label for="code2">基岩版验证码</label><input id="code2" inputmode="numeric" maxlength="8" placeholder="基岩客户端 /linkcode"></div><button onclick="verifyCodes()">验证并读取</button></div>
+    <div class="notice hidden" id="verifyMsg"></div>
+  </section>
+  <section id="compare" class="hidden">
+    <div class="profiles" id="profiles"></div>
+    <div class="panel" style="margin-top:16px">
+      <h2>第二步：选择保留的进度</h2>
+      <p>系统会先备份双方存档。选择基岩时，将基岩的位置、背包、末影箱、经验、统计和成就迁移到 Java 身份，然后建立绑定。</p>
+      <div class="actions"><button id="keepJava" onclick="commit('java')">保留 Java 进度并绑定</button><button class="danger" id="keepBedrock" onclick="commit('bedrock')">保留基岩进度并迁移绑定</button><button class="secondary" onclick="location.reload()">取消</button></div>
+      <div class="notice" id="commitMsg">确认前请确保两个角色都已退出服务器。</div>
+    </div>
+  </section>
+</main><div class="tooltip" id="tooltip"></div><script>
+let token='';
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+async function api(path,body){const r=await fetch(path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const j=await r.json();if(!r.ok)throw Error(j.error||'请求失败');return j}
+const nice=id=>id.replace('minecraft:','').split('_').map(x=>x[0]?.toUpperCase()+x.slice(1)).join(' ');
+function icon(item){const id=item.id.replace('minecraft:','');return `https://assets.mcasset.cloud/1.21.1/assets/minecraft/textures/item/${encodeURIComponent(id)}.png`}
+function slot(item,label=''){if(!item)return `<div class="slot"><span class="slot-label">${label}</span></div>`;const data=encodeURIComponent(JSON.stringify(item));return `<div class="slot ${item.enchanted?'enchanted':''}" data-item="${data}"><img alt="${esc(item.id)}" src="${icon(item)}" data-stage="item" onerror="iconFallback(this,'${encodeURIComponent(item.id.replace('minecraft:',''))}')">${item.count>1?`<span class="count">${item.count}</span>`:''}<span class="slot-label">${label}</span></div>`}
+function iconFallback(img,id){if(img.dataset.stage==='item'){img.dataset.stage='block';img.src=`https://assets.mcasset.cloud/1.21.1/assets/minecraft/textures/block/${id}.png`}else{img.style.display='none'}}
+function inventory(items){const map=new Map((items||[]).map(x=>[x.slot,x]));const main=[];for(let i=9;i<36;i++)main.push(slot(map.get(i)));const hot=[];for(let i=0;i<9;i++)hot.push(slot(map.get(i)));const eq=[[103,'头'],[102,'胸'],[101,'腿'],[100,'脚'],[-106,'副']].map(([s,l])=>slot(map.get(s),l));return `<div class="mc-section"><div class="mc-title"><b>玩家物品栏</b><span>${items?.length||0} 种堆叠</span></div><div class="mc-shell"><div class="equipment">${eq.join('')}</div><div class="slot-grid">${main.join('')}</div><div class="slot-grid hotbar">${hot.join('')}</div></div></div>`}
+function ender(items){const map=new Map((items||[]).map(x=>[x.slot,x]));const slots=[];for(let i=0;i<27;i++)slots.push(slot(map.get(i)));return `<div class="mc-section"><div class="mc-title"><b>末影箱</b><span>${items?.length||0} 种堆叠</span></div><div class="mc-shell"><div class="slot-grid">${slots.join('')}</div></div><div class="mc-credit">物品图标：Minecraft 1.21.1 游戏资源</div></div>`}
+function card(p){return `<article class="profile ${p.bedrock?'choice-bedrock':'choice-java'}"><h2 class="profile-choice">${p.bedrock?'基岩版':'Java 版'} · ${esc(p.name)} ${p.demo?'<span class="badge">只读演示</span>':''}</h2><div class="profile-stats"><div class="kv"><span>UUID</span><span class="uuid">${esc(p.uuid)}</span><span>状态</span><span>${p.online?'在线（请退出）':'已离线'}</span><span>维度</span><span>${esc(p.dimension)}</span><span>坐标</span><span>${esc(p.position)}</span><span>等级/经验</span><span>${p.level} / ${p.totalXp}</span><span>生命/饥饿</span><span>${p.health} / ${p.food}</span><span>游戏时长</span><span>${esc(p.playTime)}</span><span>已完成进度</span><span>${p.advancements}</span><span>计分板</span><span>${esc(p.scores||'无')}</span></div></div>${inventory(p.inventoryItems)}${ender(p.enderItems)}</article>`}
+document.addEventListener('mousemove',e=>{const s=e.target.closest?.('.slot[data-item]');if(!s){tooltip.style.display='none';return}const i=JSON.parse(decodeURIComponent(s.dataset.item));tooltip.innerHTML=`<b>${esc(i.customName||nice(i.id))}</b><br><span style="color:#777">${esc(i.id)} ×${i.count}</span>${i.nbt?`<br><span class="nbt">${esc(i.nbt)}</span>`:''}`;tooltip.style.display='block';const x=Math.min(e.clientX+16,innerWidth-tooltip.offsetWidth-8),y=Math.min(e.clientY+16,innerHeight-tooltip.offsetHeight-8);tooltip.style.left=x+'px';tooltip.style.top=y+'px'});
+async function verifyCodes(){const m=document.querySelector('#verifyMsg');m.classList.remove('hidden');m.textContent='正在验证并读取存档…';try{const j=await api('/api/verify',{code1:code1.value.trim(),code2:code2.value.trim()});token=j.token;profiles.innerHTML=j.profiles.map(card).join('');compare.classList.remove('hidden');if(j.demo){keepJava.disabled=keepBedrock.disabled=true;commitMsg.textContent='这是只读演示数据：可检查各种物品与 NBT 的显示效果，不会执行真实迁移或绑定。'}m.textContent='验证成功。请核对两边的数据。';}catch(e){m.textContent=e.message}}
+async function commit(choice){if(!confirm(choice==='java'?'确定保留 Java 进度并绑定？':'确定以基岩进度覆盖 Java 进度并绑定？双方原档会先备份。'))return;keepJava.disabled=keepBedrock.disabled=true;commitMsg.textContent='正在锁定账号、备份并迁移，请勿登录…';try{const j=await api('/api/commit',{token,choice});commitMsg.textContent=j.message;}catch(e){commitMsg.textContent=e.message;keepJava.disabled=keepBedrock.disabled=false}}
+</script></body></html>

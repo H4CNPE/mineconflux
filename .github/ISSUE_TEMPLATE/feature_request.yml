@@ -1,0 +1,22 @@
+name: Feature request
+description: Propose a compatible migration or safety improvement.
+title: "[Feature] "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem to solve
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+    validations:
+      required: true
+  - type: textarea
+    id: recovery
+    attributes:
+      label: Failure and recovery considerations
+      description: Explain how partial migration, rollback and concurrent logins should be handled.

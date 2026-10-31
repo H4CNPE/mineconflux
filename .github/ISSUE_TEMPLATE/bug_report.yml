@@ -1,0 +1,51 @@
+name: Bug report
+description: Report a reproducible problem. Do not include private player or server data.
+title: "[Bug] "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: "For security issues, use GitHub private vulnerability reporting instead of this form."
+  - type: input
+    id: portal-version
+    attributes:
+      label: MineConflux version
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Minecraft, Fabric Loader, Fabric API, Floodgate, Geyser and Java versions.
+    validations:
+      required: true
+  - type: dropdown
+    id: choice
+    attributes:
+      label: Operation
+      options:
+        - Verification or preview
+        - Keep Java progress
+        - Migrate Bedrock progress
+        - Startup or configuration
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction steps
+      description: Use fake names and redact UUIDs, XUIDs, codes, domains, IP addresses and paths.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected and actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Redacted logs
+      render: text

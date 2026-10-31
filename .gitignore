@@ -1,0 +1,22 @@
+.gradle/
+build/
+out/
+.idea/
+*.iml
+.vscode/
+*.log
+*.tmp
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
+
+# Local test servers and real player data must never be committed.
+run/
+server/
+world/
+/config/mineconflux.json
+/mineconflux/
+*.dat
+*.dat_old
+*.sqlite
+*.db
+key.pem
