@@ -1,5 +1,9 @@
 # MineConflux
 
+<p align="center">
+  <img src="docs/assets/mineconflux-icon.png" alt="MineConflux icon" width="180">
+</p>
+
 English | [简体中文](README.md)
 
 **One identity. Both editions.**
